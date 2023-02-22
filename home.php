@@ -1,5 +1,5 @@
 <?php
-  session_start();
+  include('functions.php');
   if(!isset($_SESSION['login'])){
     header('location: index.php');
   }
@@ -16,10 +16,10 @@
     // if everything is ok, try to upload file
     } else {
       if (move_uploaded_file($arquivo["tmp_name"], $target_file)) {
-        echo '<script>alert("Arquivo foi carregado com sucesso!!!!")</script><meta http-equiv="refresh" content="0.1;url=home.php"> </meta>';
-      /*header( "Refresh:0.1; url='index.php'");*/
+        messageRefreshHome("Arquivo carregado com sucesso!!!");
+        cadastrarArquivo($_POST['nomeExib'], basename($arquivo["name"]));
       } else {
-        echo '<script>alert("Possible file upload attack!!!!")</script><meta http-equiv="refresh" content="0.1;url=home.php"> </meta>';
+        messageRefreshHome("Possible file upload attack!!!!");
       }
     }
   }
@@ -35,101 +35,189 @@
     /* CSS do HOME */
 
     *{
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  color: var(--corPrimaria);
-  font-family: 'Roboto', sans-serif;
-}
-:root{
-  --background: white;
-  --corPrimaria: #03bb85; 
-  --corSecundaria: #33c3e3;
-}
-body{
-  overflow-x: hidden;
-}
-.headerHome{
-  width: 100vw;
-  padding: 2rem;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      color: var(--corPrimaria);
+      font-family: 'Roboto', sans-serif;
+    }
+    :root{
+      --background: white;
+      --corPrimaria: #03bb85; 
+      --corSecundaria: #33c3e3;
+    }
+    body{
+      overflow-x: hidden;
+    }
+    .headerHome{
+      width: 100vw;
+      padding: 2rem;
 
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
 
-  border-bottom: 1px solid var(--corPrimaria);
-}
-.mainHome{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; 
-  
-  padding: 8rem;
-  gap: 2rem;
-}
-.mainHome .switch{
-  display: flex;
-  flex-direction: row;
-  gap: 1rem;
-}
-.mainHome .switch #upload{
-  border-bottom: 4px solid var(--corPrimaria);
+      border-bottom: 1px solid var(--corPrimaria);
+    }
+    .mainHome{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center; 
+      
+      padding: 8rem;
+      gap: 2rem;
+    }
+    .mainHome .switch{
+      display: flex;
+      flex-direction: row;
+      gap: 1rem;
+    }
+    .mainHome .switch #upload{
+      border-bottom: 4px solid var(--corPrimaria);
 
-  cursor: pointer;
-}
-.mainHome .switch #download{
-  cursor: pointer;
-}
-.mainHome .upload{
-  border: 1px solid var(--corPrimaria);
-  border-radius: 6px;
+      cursor: pointer;
+    }
+    .mainHome .switch #download{
+      cursor: pointer;
+    }
+    .mainHome .upload{
+      border: 1px solid var(--corPrimaria);
+      border-radius: 6px;
+      width: 27rem;
 
-  padding: 2rem;
-}
-.mainHome .upload .form{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
 
-  gap: 1rem;
-}
-.mainHome .download{
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+      padding: 2rem;
+      gap: 1rem;
+    }
+    .mainHome .upload .form{
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center; 
 
-  border: 1px solid var(--corPrimaria);
-  border-radius: 6px;
+      gap: 1rem;
+    }
+    .mainHome .download{
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
 
-  gap: 1rem;
-  padding: 2rem;
-}
+      border: 1px solid var(--corPrimaria);
+      border-radius: 6px;
 
-button{
-  background-color: var(--background);
-  color: var(--corPrimaria);
+      gap: 1rem;
+      padding: 1.5rem;
 
-  border: 1px solid var(--corPrimaria);
-  width: 17rem;
-  height: 3rem;
-  font-size: 18px;
+      margin-inline: 3rem;
+    }
 
-  cursor: pointer;
+    button{
+      background-color: var(--background);
+      color: var(--corPrimaria);
 
-  border-radius: 15px;
+      border: 1px solid var(--corPrimaria);
+      width: 17rem;
+      
+      padding: 1rem;
 
-  transition: width 0.5s;
-}
-button:hover{
-  background-color: var(--corPrimaria);
-  color: var(--background);
-  width: 18rem;
-}
+      font-size: 18px;
+
+      cursor: pointer;
+
+      border-radius: 15px;
+
+      transition: width 0.5s;
+    }
+    button:hover{
+      background-color: var(--corPrimaria);
+      color: var(--background);
+      width: 18rem;
+    }
+    #input{
+      background-color: var(--background);
+      color: var(--corPrimaria);
+
+      border: 1px solid var(--corPrimaria);
+      width: 17rem;
+      height: 2.2rem;
+      padding: 0.7rem;
+
+      border-radius: 15px;
+
+      outline: none;
+      transition: width 0.5s;
+    }
+    #input:focus{
+      background-color: var(--corPrimaria);
+      color: var(--background);
+      width: 18rem;
+    }
+    #input::placeholder{
+      color: var(--corPrimaria);
+      font-size: 15px;
+    }
+    #input:focus::placeholder{
+      color: var(--background);
+      font-size: 15px;
+    }
+    .exemplo{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+
+      border: 1px solid var(--corPrimaria);
+      border-radius: 6px;
+
+      padding: 1rem;
+      gap: 1rem;
+    }
+    .arquivo{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+
+      gap: 1rem;
+
+      flex-wrap: wrap;
+    }
+    .arquivoEsp{
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+
+      gap: 0.5rem;
+
+    }
+    .arquivoEsp span{
+      width: 17rem;
+    }
   </style>
+  <script>
+    function showDownload() {
+  document.getElementById('upload').style.borderBottom = 'none'
+  document.getElementById('download').style.borderBottom =
+    '4px solid var(--corPrimaria)'
+  document.getElementById('divUpload').style.display = 'none'
+  document.getElementById('divDownload').style.display = 'flex'
+}
+function showUpload() {
+  document.getElementById('upload').style.borderBottom =
+    '4px solid var(--corPrimaria)'
+  document.getElementById('download').style.borderBottom = 'none'
+  document.getElementById('divUpload').style.display = 'flex'
+  document.getElementById('divDownload').style.display = 'none'
+}
+  </script>
 </head>
 <body>
   <section id="header">
@@ -146,34 +234,29 @@ button:hover{
       </div>
       <div class="upload" id="divUpload">
         <form action="" method="post" class="form" enctype="multipart/form-data">
-          <label for="upload">Selecione o arquivo e em seguida faça o upload!!</label>
+          <input type="text" name="nomeExib" id="input" placeholder="Digite o nome de exibição do arquivo:">
           <input type="file" name="upload" id="upload">
           <button type="submit" name="uploadSubmit">Upload</button>
-          <img src="logoPedro.png" alt="" width="100px">
         </form>
+        <div class="exemplo">
+            <span>Exemplo de como o arquivo deve aparecer para download:</span>
+            <span>Livro de matemática 2° ano(nome de exibição)</span>
+          <button>algebraa.pdf(download)</button>
+        </div>
+        <img src="logoPedro.png" alt="" width="100px">
       </div>
       <div class="download" id="divDownload">
-        <a href="arquivos/O Algebrista.pdf" target="_blank"><button>O algebrista</button></a>
-        <a href="arquivos/GINCANA.docx" target="_blank"><button>Gincana</button></a>
+      <h1>Arquivos cadastrados(ordem alfabética):</h1>
+        <div class="arquivo">
+        <?php
+          mostrarArquivoDownload();
+        ?>
+        </div>
       </div>
     </div>
   </section>
   <section id="footer">
     <div class="footerHome"></div>
   </section>
-  <script>
-    function showDownload(){
-      document.getElementById("upload").style.borderBottom = "none";
-      document.getElementById("download").style.borderBottom = "4px solid var(--corPrimaria)";
-      document.getElementById("divUpload").style.display = "none";
-      document.getElementById("divDownload").style.display = "flex";
-    }
-    function showUpload(){
-      document.getElementById("upload").style.borderBottom = "4px solid var(--corPrimaria)";
-      document.getElementById("download").style.borderBottom = "none";
-      document.getElementById("divUpload").style.display = "flex";
-      document.getElementById("divDownload").style.display = "none";
-    }
-  </script>
 </body>
 </html>

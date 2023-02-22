@@ -19,7 +19,7 @@
         echo '<script>alert("Arquivo foi carregado com sucesso!!!!")</script><meta http-equiv="refresh" content="0.1;url=home.php"> </meta>';
       /*header( "Refresh:0.1; url='index.php'");*/
       } else {
-        echo '<script>alert("Possible file upload attack!!!!")</script>';
+        echo '<script>alert("Possible file upload attack!!!!")</script><meta http-equiv="refresh" content="0.1;url=home.php"> </meta>';
       }
     }
   }
@@ -45,6 +45,9 @@
   --background: white;
   --corPrimaria: #03bb85; 
   --corSecundaria: #33c3e3;
+}
+body{
+  overflow-x: hidden;
 }
 .headerHome{
   width: 100vw;
@@ -95,19 +98,17 @@
 }
 .mainHome .download{
   display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
   border: 1px solid var(--corPrimaria);
   border-radius: 6px;
 
+  gap: 1rem;
   padding: 2rem;
 }
-.mainHome .download .form{
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center; 
 
-  gap: 1rem;
-}
 button{
   background-color: var(--background);
   color: var(--corPrimaria);
@@ -144,18 +145,16 @@ button:hover{
         <h1 id="download" onclick="showDownload()">Download</h1>
       </div>
       <div class="upload" id="divUpload">
-        <form action="" method="post" class="form">
+        <form action="" method="post" class="form" enctype="multipart/form-data">
           <label for="upload">Selecione o arquivo e em seguida faça o upload!!</label>
           <input type="file" name="upload" id="upload">
           <button type="submit" name="uploadSubmit">Upload</button>
+          <img src="logoPedro.png" alt="" width="100px">
         </form>
       </div>
       <div class="download" id="divDownload">
-        <form action="" method="post" class="form">
-          <label for="download">Selecione o arquivo e em seguida faça o download!!</label>
-          <input type="file" name="download" id="download">
-          <button type="submit">EEEEEEE</button>
-        </form>
+        <a href="arquivos/O Algebrista.pdf" target="_blank"><button>O algebrista</button></a>
+        <a href="arquivos/GINCANA.docx" target="_blank"><button>Gincana</button></a>
       </div>
     </div>
   </section>

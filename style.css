@@ -1,0 +1,114 @@
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: var(--corPrimaria);
+  font-family: 'Roboto', sans-serif;
+}
+:root{
+  --background: white;
+  --corPrimaria: #03bb85; 
+  --corSecundaria: #33c3e3;
+}
+body{
+  background-color: var(--background);
+  color: var(--corPrimaria);
+  font-family: 'Roboto', sans-serif;
+}
+.main{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+.login{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 15px;
+
+  background-color: var(--background);
+  color: var(--corPrimaria);
+  border: 2px solid var(--corPrimaria);
+}
+.login h1{
+  color: var(--corPrimaria);
+}
+.cad{
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  gap: 1rem;
+  padding: 1.5rem;
+  border-radius: 15px;
+
+  background-color: var(--background);
+  color: var(--corPrimaria);
+  border: 2px solid var(--corPrimaria);
+}
+.cad h1{
+  color: var(--corPrimaria);
+}
+.form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+input{
+  background-color: var(--background);
+  color: var(--corPrimaria);
+
+  border: 1px solid var(--corPrimaria);
+  width: 17rem;
+  height: 2.2rem;
+  padding: 0.7rem;
+
+  border-radius: 15px;
+
+  outline: none;
+  transition: width 0.5s;
+}
+input:focus{
+  background-color: var(--corPrimaria);
+  color: var(--background);
+  width: 18rem;
+}
+input::placeholder{
+  color: var(--corPrimaria);
+  font-size: 15px;
+}
+input:focus::placeholder{
+  color: var(--background);
+  font-size: 15px;
+}
+button{
+  background-color: var(--background);
+  color: var(--corPrimaria);
+
+  border: 1px solid var(--corPrimaria);
+  width: 17rem;
+  height: 3rem;
+  font-size: 18px;
+
+  cursor: pointer;
+
+  border-radius: 15px;
+
+  transition: width 0.5s;
+}
+button:hover{
+  background-color: var(--corPrimaria);
+  color: var(--background);
+  width: 18rem;
+}
+
